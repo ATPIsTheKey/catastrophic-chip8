@@ -3,4 +3,4 @@ project(catastrophic_chip8 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(catastrophic_chip8 main.c)
+add_executable(catastrophic_chip8 main.c catastrophic-chip8/chip8.c catastrophic-chip8/chip8.h)
