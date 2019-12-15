@@ -34,7 +34,6 @@ typedef struct _CHIP8_CPU {
     register8_t  delay_timer;
     register8_t  sound_timer;
 
-
     /* A program counter is a register that contains the address of the instruction
      * being executed at the current time. As each instruction gets fetched, the
      * program counter increases its stored value by 1. After each instruction is
