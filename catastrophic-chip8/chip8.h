@@ -6,11 +6,10 @@
 #define CATASTROPHIC_CHIP8_CHIP8_H
 
 #include <stdint.h>
-
+#include <stddef.h>
 
 typedef uint8_t  register8_t;
 typedef uint16_t register16_t;
-
 
 typedef struct _CHIP8_CPU {
     /* CHIP-8 has 16 8-bit data registers named V0 to VF. The VF register doubles as
@@ -48,7 +47,7 @@ typedef struct _CHIP8_CPU {
 } CHIP8_CPU;
 
 
-typedef struct _CHIP8_SYS {
+typedef struct _CHIP8_VM {
     CHIP8_CPU *cpu;
 
     /* Memory Map:
@@ -89,10 +88,13 @@ typedef struct _CHIP8_SYS {
      * registers.
      * (https://en.wikipedia.org/wiki/CHIP-8#Input) */
     uint8_t keypad[16];
-} CHIP8_SYS;
+} CHIP8_VM;
 
 
-CHIP8_SYS *CHIP8_sysinit();
-void CHIP8_syskill(CHIP8_SYS *sys);
+CHIP8_VM *CHIP8_init_vm(size_t clockspeed);
+void CHIP8_kill_vm(CHIP8_VM *sys);
+void CHIP8_load_rom(char *fpath);
+void CHIP8_emulate_cycle();
+int CHIP8_drawflag_set(void);
 
 #endif //CATASTROPHIC_CHIP8_CHIP8_H
