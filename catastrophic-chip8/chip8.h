@@ -8,6 +8,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
+enum CHIP8_CONSTANTS {
+    SCR_W        = 64,
+    SCR_H        = 32,
+    FONTSET_SIZE = 80,
+    MEM_SIZE     = 4096 // 0xFFF
+};
+
 typedef uint8_t  register8_t;
 typedef uint16_t register16_t;
 
@@ -44,57 +51,28 @@ typedef struct _CHIP8_CPU {
     /* The stack is used to store return addresses when subroutines are called. */
     register8_t  sp;
     uint16_t stack[16];
+
 } CHIP8_CPU;
 
 
 typedef struct _CHIP8_VM {
     CHIP8_CPU *cpu;
 
-    /* Memory Map:
-     *  +---------------+= 0xFFF (4095) End of Chip-8 RAM
-     *  | 0x200 to 0xFFF|
-     *  |     Chip-8    |
-     *  | Program / Data|
-     *  |     Space     |
-     *  +- - - - - - - -+= 0x600 (1536) Start of ETI 660 Chip-8 programs
-     *  |               |
-     *  +---------------+= 0x200 (512) Start of most Chip-8 programs
-     *  | 0x000 to 0x1FF|
-     *  | Reserved for  |
-     *  |  interpreter  |
-     *  +---------------+= 0x000 (0) Start of Chip-8 RAM
-     *  (http://devernay.free.fr/hacks/chip8/C8TECH10.HTM#2.1)
-     */
-    uint8_t mem[4096];
+    uint16_t opcode;
+    uint32_t cycle_cnt; // number of cpu cycles mod clock frequency
+    uint32_t n_cycles_timerdecr; // cpu cycles per timer register decrement
 
-    /* Original CHIP-8 Display resolution is 64×32 pixels, and color is monochrome.
-     * Graphics are drawn to the screen solely by drawing sprites, which are 8 pixels
-     * wide and may be from 1 to 15 pixels in height. Sprite pixels are XOR'd with
-     * corresponding screen pixels.
-     * (https://en.wikipedia.org/wiki/CHIP-8#Graphics_and_sound) */
-    uint8_t framebuffer[64*32];
-
-    /* Chip8 comes with a font set (sprites) that allows character 0-9 and A-F to be
-     * printed directly to the screen.Each one of these characters fit within a 8x5
-     * grid (all font data stored in first 80 bytes of memory).
-     * (http://www.cs.columbia.edu/~sedwards/classes/2016/4840-spring/designs/Chip8.pdf) */
-    uint8_t fontbuffer[16*5];
-
-    /* Input is done with a hex keyboard that has 16 keys ranging 0 to F.
-     * The '8', '4', '6', and '2' keys are typically used for directional input.
-     * Three opcodes are used to detect input. One skips an instruction if a specific
-     * key is pressed, while another does the same if a specific key is not pressed.
-     * The third waits for a key press, and then stores it in one of the data
-     * registers.
-     * (https://en.wikipedia.org/wiki/CHIP-8#Input) */
-    uint8_t keypad[16];
+    uint8_t mem[MEM_SIZE];
+    uint8_t framebuffer[SCR_W * SCR_H];
+    uint8_t keypad[16]; // 16-key hexadecimal keypad
 } CHIP8_VM;
 
 
 CHIP8_VM *CHIP8_init_vm(size_t clockspeed);
-void CHIP8_kill_vm(CHIP8_VM *sys);
-void CHIP8_load_rom(char *fpath);
-void CHIP8_emulate_cycle();
-int CHIP8_drawflag_set(void);
+void      CHIP8_kill_vm(CHIP8_VM *vm);
+void      CHIP8_load_rom(CHIP8_VM *vm, char *fpath);
+void      CHIP8_emulate_cycle(CHIP8_CPU *vm);
+int       CHIP8_is_drawflag_set(void);
+void      CHIP8_set_keys(); // todo: some SDL keyboard state
 
 #endif //CATASTROPHIC_CHIP8_CHIP8_H
