@@ -1,12 +1,15 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <SDL2/SDL.h>
 
 #include "catastrophic-chip8/chip8.h"
 
-#define CLOCK_SPEED 500
+// clock speed should be chosen proportionally to 60 Hz
+#define CLOCK_SPEED 1
 
 // Small test program to make sure SDL2 library is working
-int main(int argc, char *argv[])
+void
+test_sdl(void)
 {
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -24,10 +27,14 @@ int main(int argc, char *argv[])
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
 
-    SDL_Delay(3000);
+    SDL_Delay(5000);
 
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
 
+int main(int argc, char *argv[])
+{
+    test_sdl();
     return 0;
 }
