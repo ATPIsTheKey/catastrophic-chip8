@@ -4,9 +4,6 @@
 
 #include "catastrophic-chip8/chip8.h"
 
-// clock speed should be chosen proportionally to 60 Hz
-#define CLOCK_SPEED 1
-
 // Small test program to make sure SDL2 library is working
 void
 test_sdl(void)
