@@ -9,8 +9,8 @@
 #include "chip8.h"
 #include "../rf/stdutils.h"
 
-enum CHIP8_START_ADDRS {
-    RAM_START_ADDR     = 0x00,
+enum CHIP8_ADDRS {
+    RAM_START_ADDR     = 0x00, // 00
     FONTSET_START_ADDR = 0x50, // 80
     PROGRAM_START_ADDR = 0x200 // 200
 };
@@ -65,9 +65,34 @@ CHIP8_init_vm(size_t clockspeed)
     return vm;
 }
 
+
 void
 CHIP8_kill_vm(CHIP8_VM *vm)
 {
     free(vm->cpu); vm->cpu = NULL;
     free(vm); vm = NULL;
+}
+
+
+void
+CHIP8_load_rom(CHIP8_VM *vm, char *fpath)
+{
+    FILE *rom_fp = fopen(fpath, "rb"); NP_CHECK(rom_fp)
+
+    uint8_t instr;
+    for (int i = 0; fread(&instr, sizeof(instr), 1, rom_fp) != 0; i++)
+        vm->mem[PROGRAM_START_ADDR + i] = instr;
+}
+
+
+void
+CHIP8_emulate_cycle(CHIP8_VM *vm)
+{
+}
+
+
+int
+CHIP8_is_drawflag_set(CHIP8_VM *vm)
+{
+    return vm->flags & (uint32_t) DRAWFLAG ? 1 : 0;
 }
