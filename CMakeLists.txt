@@ -10,6 +10,6 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(catastrophic_chip8 main.c
-        catastrophic-chip8/chip8.c catastrophic-chip8/chip8.h
-        rf/stdutils.c rf/stdutils.h)
+        catastrophic-chip8/vm.c catastrophic-chip8/vm.h
+        rf/stdutils.c rf/stdutils.h catastrophic-chip8/instructions.c catastrophic-chip8/instructions.h)
 target_link_libraries(catastrophic_chip8 ${SDL2_LIBRARIES})
