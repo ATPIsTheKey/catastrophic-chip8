@@ -4,6 +4,8 @@
 
 #include "catastrophic-chip8/chip8.h"
 
+#define ROM_PATH "/home/roland/CLionProjects/catastrophic-chip8/roms/"
+
 // Small test program to make sure SDL2 library is working
 void
 test_sdl(void)
@@ -32,6 +34,8 @@ test_sdl(void)
 
 int main(int argc, char *argv[])
 {
-    test_sdl();
+    CHIP8_VM *vm = CHIP8_init_vm(600);
+    CHIP8_load_rom(vm, ROM_PATH"BLITZ");
+    CHIP8_kill_vm(vm);
     return 0;
 }
