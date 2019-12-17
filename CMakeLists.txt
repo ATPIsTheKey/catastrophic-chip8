@@ -9,5 +9,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(catastrophic_chip8 main.c catastrophic-chip8/chip8.c catastrophic-chip8/chip8.h rf/stdutils.c rf/stdutils.h)
+add_executable(catastrophic_chip8 main.c
+        catastrophic-chip8/chip8.c catastrophic-chip8/chip8.h
+        rf/stdutils.c rf/stdutils.h)
 target_link_libraries(catastrophic_chip8 ${SDL2_LIBRARIES})
