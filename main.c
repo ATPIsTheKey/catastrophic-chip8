@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <SDL2/SDL.h>
 
-#include "catastrophic-chip8/chip8.h"
+#include "catastrophic-chip8/vm.h"
 
 #define ROM_PATH "/home/roland/CLionProjects/catastrophic-chip8/roms/"
 
@@ -32,10 +32,11 @@ test_sdl(void)
     SDL_Quit();
 }
 
+
 int main(int argc, char *argv[])
 {
-    CHIP8_VM *vm = CHIP8_init_vm(600);
-    CHIP8_load_rom(vm, ROM_PATH"BLITZ");
-    CHIP8_kill_vm(vm);
+    CHIP8_VM *vm = CHIP8VM_init(600);
+    CHIP8VM_load_rom(vm, ROM_PATH"Airplane.ch8");
+    CHIP8VM_kill(vm);
     return 0;
 }
