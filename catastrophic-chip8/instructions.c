@@ -421,7 +421,7 @@ CH8INSTR_Fx33(CH8_VM *vm)
     uint8_t bcd2 = (vm->cpu->Vx[x] % 100u - vm->cpu->Vx[x] % 10u) / 10u;
     uint8_t bcd3 = (vm->cpu->Vx[x] % 1000u - vm->cpu->Vx[x] % 100u) / 100u;
 
-    vm->cpu->I = (bcd3 << 8u) | (bcd2 << 4u) | bcd1; // todo: fix Clang-Tidy
+    vm->cpu->I = (bcd3 << 8u) | (bcd2 << 4u) | bcd1;
 }
 
 
