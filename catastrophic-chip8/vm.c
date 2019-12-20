@@ -6,10 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <SDL2/SDL.h>
+
 #include "vm.h"
 #include "../rf/stdutils.h"
 
-enum CHIP8VM_ADDRS {
+enum CH8VM_ADDRS {
     RAM_START_ADDR     = 0x00, // 00
     FONTSET_START_ADDR = 0x50, // 80
     PROGRAM_START_ADDR = 0x200 // 200
@@ -36,7 +38,7 @@ static uint8_t fontset[FONTSET_SIZE] ={
 
 
 CH8_VM*
-CHIP8VM_init(size_t clockspeed)
+CH8VM_init(size_t clockspeed)
 {
     CH8_VM *vm = malloc(sizeof(CH8_VM)); NP_CHECK(vm)
     vm->cpu = malloc(sizeof(CH8_CPU)); NP_CHECK(vm->cpu)
@@ -69,7 +71,7 @@ CHIP8VM_init(size_t clockspeed)
 
 
 void
-CHIP8VM_kill(CH8_VM *vm)
+CH8VM_kill(CH8_VM *vm)
 {
     free(vm->cpu); vm->cpu = NULL;
     free(vm); vm = NULL;
@@ -77,13 +79,13 @@ CHIP8VM_kill(CH8_VM *vm)
 
 
 void
-CHIP8VM_load_rom(CH8_VM *vm, char *fpath)
+CH8VM_load_rom(CH8_VM *vm, char *fpath)
 {
     FILE *rom_fp = fopen(fpath, "rb"); NP_CHECK(rom_fp)
 
-    uint8_t instr;
-    for (int i = 0; fread(&instr, sizeof(instr), 1, rom_fp) != 0; i++)
-        vm->mem[PROGRAM_START_ADDR + i] = instr;
+    uint16_t b;
+    for (int i = 0; fread(&b, sizeof(b), 1, rom_fp) != 0; i++)
+        vm->mem[PROGRAM_START_ADDR + i] = b;
 }
 
 
@@ -102,16 +104,16 @@ unset_flag(CH8_VM *vm, uint32_t flag)
 
 
 int
-CHIP8VM_is_drawflag_set(CH8_VM *vm)
+CH8VM_is_drawflag_set(CH8_VM *vm)
 {
     return vm->flags & DRAWFLAG ? 1 : 0;
 }
 
 
 void
-CHIP8VM_emulate_cycle(CH8_VM *vm)
+CH8VM_emulate_cycle(CH8_VM *vm)
 {
-    uint16_t opcode = vm->mem[vm->cpu->pc] <<  8 | vm->mem[vm->cpu->pc + 1];
+    uint16_t opcode = vm->mem[vm->cpu->pc] << 8 | vm->mem[vm->cpu->pc + 1];
 
     vm->current_opcode = opcode;
     switch (opcode & 0xF000) {
@@ -120,4 +122,40 @@ CHIP8VM_emulate_cycle(CH8_VM *vm)
     }
 
     vm->cpu->pc += 2;
+}
+
+
+int
+CH8VM_SDL_set_keys(CH8_VM *vm)
+{
+    SDL_Event e;
+
+    const uint8_t *keypad_state = SDL_GetKeyboardState(NULL);
+    while (SDL_PollEvent(&e))
+    {
+        if (e.type == SDL_QUIT)
+            return -1;
+
+        if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP)
+        {
+            vm->keypad[0x00] = keypad_state[SDL_SCANCODE_1];
+            vm->keypad[0x01] = keypad_state[SDL_SCANCODE_2];
+            vm->keypad[0x02] = keypad_state[SDL_SCANCODE_3];
+            vm->keypad[0x03] = keypad_state[SDL_SCANCODE_4];
+            vm->keypad[0x04] = keypad_state[SDL_SCANCODE_Q];
+            vm->keypad[0x05] = keypad_state[SDL_SCANCODE_W];
+            vm->keypad[0x06] = keypad_state[SDL_SCANCODE_E];
+            vm->keypad[0x07] = keypad_state[SDL_SCANCODE_R];
+            vm->keypad[0x08] = keypad_state[SDL_SCANCODE_A];
+            vm->keypad[0x09] = keypad_state[SDL_SCANCODE_S];
+            vm->keypad[0x0A] = keypad_state[SDL_SCANCODE_D];
+            vm->keypad[0x0B] = keypad_state[SDL_SCANCODE_F];
+            vm->keypad[0x0C] = keypad_state[SDL_SCANCODE_Y]; // todo: check Y key
+            vm->keypad[0x0D] = keypad_state[SDL_SCANCODE_X];
+            vm->keypad[0x0E] = keypad_state[SDL_SCANCODE_C];
+            vm->keypad[0x0F] = keypad_state[SDL_SCANCODE_V];
+        }
+    }
+
+    return 0;
 }
