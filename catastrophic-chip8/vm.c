@@ -35,15 +35,15 @@ static uint8_t fontset[FONTSET_SIZE] ={
 };
 
 
-CHIP8_VM*
+CH8_VM*
 CHIP8VM_init(size_t clockspeed)
 {
-    CHIP8_VM *vm = malloc(sizeof(CHIP8_VM)); NP_CHECK(vm)
-    vm->cpu = malloc(sizeof(CHIP8_CPU)); NP_CHECK(vm->cpu)
+    CH8_VM *vm = malloc(sizeof(CH8_VM)); NP_CHECK(vm)
+    vm->cpu = malloc(sizeof(CH8_CPU)); NP_CHECK(vm->cpu)
 
     // CPU initialization
 
-    memset(vm->cpu->VX, 0x00, 16 * sizeof(uint8_t));
+    memset(vm->cpu->Vx, 0x00, 16 * sizeof(uint8_t));
     memset(vm->cpu->stack, 0x00, 16 * sizeof(uint8_t));
 
     vm->cpu->I  = 0x0000;
@@ -69,7 +69,7 @@ CHIP8VM_init(size_t clockspeed)
 
 
 void
-CHIP8VM_kill(CHIP8_VM *vm)
+CHIP8VM_kill(CH8_VM *vm)
 {
     free(vm->cpu); vm->cpu = NULL;
     free(vm); vm = NULL;
@@ -77,7 +77,7 @@ CHIP8VM_kill(CHIP8_VM *vm)
 
 
 void
-CHIP8VM_load_rom(CHIP8_VM *vm, char *fpath)
+CHIP8VM_load_rom(CH8_VM *vm, char *fpath)
 {
     FILE *rom_fp = fopen(fpath, "rb"); NP_CHECK(rom_fp)
 
@@ -88,28 +88,28 @@ CHIP8VM_load_rom(CHIP8_VM *vm, char *fpath)
 
 
 static inline void
-set_flag(CHIP8_VM *vm, uint32_t flag)
+set_flag(CH8_VM *vm, uint32_t flag)
 {
     vm->flags |= flag;
 }
 
 
 static inline void
-unset_flag(CHIP8_VM *vm, uint32_t flag)
+unset_flag(CH8_VM *vm, uint32_t flag)
 {
     vm->flags &= ~flag;
 }
 
 
 int
-CHIP8VM_is_drawflag_set(CHIP8_VM *vm)
+CHIP8VM_is_drawflag_set(CH8_VM *vm)
 {
     return vm->flags & DRAWFLAG ? 1 : 0;
 }
 
 
 void
-CHIP8VM_emulate_cycle(CHIP8_VM *vm)
+CHIP8VM_emulate_cycle(CH8_VM *vm)
 {
     uint16_t opcode = vm->mem[vm->cpu->pc] <<  8 | vm->mem[vm->cpu->pc + 1];
 
