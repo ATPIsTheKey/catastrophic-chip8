@@ -95,7 +95,7 @@ Memory Map:
 2.2 - Registers
 ---------------
 
-Chip-8 has 16 general purpose 8-bit registers, usually referred to as VX,
+Chip-8 has 16 general purpose 8-bit registers, usually referred to as Vx,
 where x is a hexadecimal digit (0 through F). There is also a 16-bit register
 called I. This register is generally used to store memory addresses, so only
 the lowest (rightmost) 12 bits are usually used.
@@ -322,98 +322,98 @@ In these listings, the following variables are used (respect to instructions):
     The interpreter increments the stack pointer, then puts the current
     PC on the top of the stack. The PC is then set to nnn.
 
-3xkk - SE VX, byte
-    Skip next instruction if VX = kk.
+3xkk - SE Vx, byte
+    Skip next instruction if Vx = kk.
 
-    The interpreter compares register VX to kk, and if they are equal,
+    The interpreter compares register Vx to kk, and if they are equal,
     increments the program counter by 2.
 
-4xkk - SNE VX, byte
-    Skip next instruction if VX != kk.
+4xkk - SNE Vx, byte
+    Skip next instruction if Vx != kk.
 
-    The interpreter compares register VX to kk, and if they are not equal,
+    The interpreter compares register Vx to kk, and if they are not equal,
     increments the program counter by 2.
 
-5xy0 - SE VX, Vy
-    Skip next instruction if VX = Vy.
+5xy0 - SE Vx, Vy
+    Skip next instruction if Vx = Vy.
 
-    The interpreter compares register VX to register Vy, and if they are
+    The interpreter compares register Vx to register Vy, and if they are
     equal, increments the program counter by 2.
 
-6xkk - LD VX, byte
-    Set VX = kk.
+6xkk - LD Vx, byte
+    Set Vx = kk.
 
-    The interpreter puts the value kk into register VX.
+    The interpreter puts the value kk into register Vx.
 
-7xkk - ADD VX, byte
-    Set VX = VX + kk.
+7xkk - ADD Vx, byte
+    Set Vx = Vx + kk.
 
-    Adds the value kk to the value of register VX, then stores the result in VX.
+    Adds the value kk to the value of register Vx, then stores the result in Vx.
 
-8xy0 - LD VX, Vy
-    Set VX = Vy.
+8xy0 - LD Vx, Vy
+    Set Vx = Vy.
 
-    Stores the value of register Vy in register VX.
+    Stores the value of register Vy in register Vx.
 
-8xy1 - OR VX, Vy
-    Set VX = VX OR Vy.
+8xy1 - OR Vx, Vy
+    Set Vx = Vx OR Vy.
 
-    Performs a bitwise OR on the values of VX and Vy, then stores the
-    result in VX. A bitwise OR compares the corrseponding bits from two
+    Performs a bitwise OR on the values of Vx and Vy, then stores the
+    result in Vx. A bitwise OR compares the corrseponding bits from two
     values, and if either bit is 1, then the same bit in the result is
     also 1. Otherwise, it is 0.
 
-8xy2 - AND VX, Vy
-    Set VX = VX AND Vy.
+8xy2 - AND Vx, Vy
+    Set Vx = Vx AND Vy.
 
-    Performs a bitwise AND on the values of VX and Vy, then stores the
-    result in VX. A bitwise AND compares the corrseponding bits from
+    Performs a bitwise AND on the values of Vx and Vy, then stores the
+    result in Vx. A bitwise AND compares the corrseponding bits from
     two values, and if both bits are 1, then the same bit in the result
     is also 1. Otherwise, it is 0.
 
-8xy3 - XOR VX, Vy
-    Set VX = VX XOR Vy.
+8xy3 - XOR Vx, Vy
+    Set Vx = Vx XOR Vy.
 
-    Performs a bitwise exclusive OR on the values of VX and Vy, then
-    stores the result in VX. An exclusive OR compares the corrseponding
+    Performs a bitwise exclusive OR on the values of Vx and Vy, then
+    stores the result in Vx. An exclusive OR compares the corrseponding
     bits from two values, and if the bits are not both the same, then
     the corresponding bit in the result is set to 1. Otherwise, it is 0.
 
-8xy4 - ADD VX, Vy
-    Set VX = VX + Vy, set VF = carry.
+8xy4 - ADD Vx, Vy
+    Set Vx = Vx + Vy, set VF = carry.
 
-    The values of VX and Vy are added together. If the result is greater
+    The values of Vx and Vy are added together. If the result is greater
     than 8 bits (i.e., > 255,) VF is set to 1, otherwise 0. Only the
-    lowest 8 bits of the result are kept, and stored in VX.
+    lowest 8 bits of the result are kept, and stored in Vx.
 
-8xy5 - SUB VX, Vy
-    Set VX = VX - Vy, set VF = NOT borrow.
+8xy5 - SUB Vx, Vy
+    Set Vx = Vx - Vy, set VF = NOT borrow.
 
-    If VX > Vy, then VF is set to 1, otherwise 0. Then Vy is subtracted
-    from VX, and the results stored in VX.
+    If Vx > Vy, then VF is set to 1, otherwise 0. Then Vy is subtracted
+    from Vx, and the results stored in Vx.
 
-8xy6 - SHR VX {, Vy}
-    Set VX = VX SHR 1.
+8xy6 - SHR Vx {, Vy}
+    Set Vx = Vx SHR 1.
 
-    If the least-significant bit of VX is 1, then VF is set to 1,
-    otherwise 0. Then VX is divided by 2.
+    If the least-significant bit of Vx is 1, then VF is set to 1,
+    otherwise 0. Then Vx is divided by 2.
 
-8xy7 - SUBN VX, Vy
-    Set VX = Vy - VX, set VF = NOT borrow.
+8xy7 - SUBN Vx, Vy
+    Set Vx = Vy - Vx, set VF = NOT borrow.
 
-    If Vy > VX, then VF is set to 1, otherwise 0. Then VX is subtracted
-    from Vy, and the results stored in VX.
+    If Vy > Vx, then VF is set to 1, otherwise 0. Then Vx is subtracted
+    from Vy, and the results stored in Vx.
 
-8xyE - SHL VX {, Vy}
-    Set VX = VX SHL 1.
+8xyE - SHL Vx {, Vy}
+    Set Vx = Vx SHL 1.
 
-    If the most-significant bit of VX is 1, then VF is set to 1, otherwise
-    to 0. Then VX is multiplied by 2.
+    If the most-significant bit of Vx is 1, then VF is set to 1, otherwise
+    to 0. Then Vx is multiplied by 2.
 
-9xy0 - SNE VX, Vy
-    Skip next instruction if VX != Vy.
+9xy0 - SNE Vx, Vy
+    Skip next instruction if Vx != Vy.
 
-    The values of VX and Vy are compared, and if they are not equal,
+    The values of Vx and Vy are compared, and if they are not equal,
     the program counter is increased by 2.
 
 Annn - LD I, addr
@@ -426,20 +426,20 @@ Bnnn - JP V0, addr
 
     The program counter is set to nnn plus the value of V0.
 
-Cxkk - RND VX, byte
-    Set VX = random byte AND kk.
+Cxkk - RND Vx, byte
+    Set Vx = random byte AND kk.
 
     The interpreter generates a random number from 0 to 255, which is
-    then ANDed with the value kk. The results are stored in VX. See
+    then ANDed with the value kk. The results are stored in Vx. See
     instruction 8xy2 for more information on AND.
 
-Dxyn - DRW VX, Vy, nibble
-    Display n-byte sprite starting at memory location I at (VX, Vy),
+Dxyn - DRW Vx, Vy, nibble
+    Display n-byte sprite starting at memory location I at (Vx, Vy),
     set VF = collision.
 
     The interpreter reads n bytes from memory, starting at the address
     stored in I. These bytes are then displayed as sprites on screen at
-    coordinates (VX, Vy). Sprites are XORed onto the existing screen.
+    coordinates (Vx, Vy). Sprites are XORed onto the existing screen.
     If this causes any pixels to be erased, VF is set to 1, otherwise
     it is set to 0. If the sprite is positioned so part of it is outside
     the coordinates of the display, it wraps around to the opposite side
@@ -447,69 +447,69 @@ Dxyn - DRW VX, Vy, nibble
     section 2.4, Display, for more information on the Chip-8 screen and
     sprites.
 
-Ex9E - SKP VX
-    Skip next instruction if key with the value of VX is pressed.
+Ex9E - SKP Vx
+    Skip next instruction if key with the value of Vx is pressed.
 
-    Checks the keyboard, and if the key corresponding to the value of VX
+    Checks the keyboard, and if the key corresponding to the value of Vx
     is currently in the down position, PC is increased by 2.
 
-ExA1 - SKNP VX
-    Skip next instruction if key with the value of VX is not pressed.
+ExA1 - SKNP Vx
+    Skip next instruction if key with the value of Vx is not pressed.
 
     Checks the keyboard, and if the key corresponding to the value of
-    VX is currently in the up position, PC is increased by 2.
+    Vx is currently in the up position, PC is increased by 2.
 
-Fx07 - LD VX, DT
-    Set VX = delay timer value.
+Fx07 - LD Vx, DT
+    Set Vx = delay timer value.
 
-    The value of DT is placed into VX.
+    The value of DT is placed into Vx.
 
-Fx0A - LD VX, K
-    Wait for a key press, store the value of the key in VX.
+Fx0A - LD Vx, K
+    Wait for a key press, store the value of the key in Vx.
 
     All execution stops until a key is pressed, then the value of that
-    key is stored in VX.
+    key is stored in Vx.
 
-Fx15 - LD DT, VX
-    Set delay timer = VX.
+Fx15 - LD DT, Vx
+    Set delay timer = Vx.
 
-    DT is set equal to the value of VX.
+    DT is set equal to the value of Vx.
 
-Fx18 - LD ST, VX
-    Set sound timer = VX.
+Fx18 - LD ST, Vx
+    Set sound timer = Vx.
 
-    ST is set equal to the value of VX.
+    ST is set equal to the value of Vx.
 
-Fx1E - ADD I, VX
-    Set I = I + VX.
+Fx1E - ADD I, Vx
+    Set I = I + Vx.
 
-    The values of I and VX are added, and the results are stored in I.
+    The values of I and Vx are added, and the results are stored in I.
 
-Fx29 - LD F, VX
-    Set I = location of sprite for digit VX.
+Fx29 - LD F, Vx
+    Set I = location of sprite for digit Vx.
 
     The value of I is set to the location for the hexadecimal sprite
-    corresponding to the value of VX. See section 2.4, Display, for
+    corresponding to the value of Vx. See section 2.4, Display, for
     more information on the Chip-8 hexadecimal font.
 
-Fx33 - LD B, VX
-    Store BCD representation of VX in memory locations I, I+1, and I+2.
+Fx33 - LD B, Vx
+    Store BCD representation of Vx in memory locations I, I+1, and I+2.
 
-    The interpreter takes the decimal value of VX, and places the hundreds
+    The interpreter takes the decimal value of Vx, and places the hundreds
     digit in memory at location in I, the tens digit at location I+1, and
     the ones digit at location I+2.
 
-Fx55 - LD [I], VX
-    Store registers V0 through VX in memory starting at location I.
+Fx55 - LD [I], Vx
+    Store registers V0 through Vx in memory starting at location I.
 
-    The interpreter copies the values of registers V0 through VX into
+    The interpreter copies the values of registers V0 through Vx into
     memory, starting at the address in I.
 
-Fx65 - LD VX, [I]
-    Read registers V0 through VX from memory starting at location I.
+Fx65 - LD Vx, [I]
+    Read registers V0 through Vx from memory starting at location I.
 
     The interpreter reads values from memory starting at location I
-    into registers V0 through VX.
+    into registers V0 through Vx.
 
 
 3.2 - Super Chip-48 Instructions
@@ -521,10 +521,10 @@ Fx65 - LD VX, [I]
 00FD - EXIT
 00FE - LOW
 00FF - HIGH
-Dxy0 - DRW VX, Vy, 0
-Fx30 - LD HF, VX
-Fx75 - LD R, VX
-Fx85 - LD VX, R
+Dxy0 - DRW Vx, Vy, 0
+Fx30 - LD HF, Vx
+Fx75 - LD R, Vx
+Fx85 - LD Vx, R
 
 
 4.0 - Credits
