@@ -15,7 +15,7 @@ enum CH8VM_SYSCONSTANTS {
     MEM_SIZE     = 4096 // 0xFFF
 };
 
-enum CH8VM_GENERAL_FLAGS {
+enum CH8VM_FLAGS {
     DRAWFLAG = 1u << 0u
 };
 
@@ -67,6 +67,7 @@ void    CH8VM_kill(CH8_VM *vm);
 void    CH8VM_load_rom(CH8_VM *vm, char *fpath);
 void    CH8VM_emulate_cycle(CH8_VM *vm);
 int     CH8VM_is_drawflag_set(CH8_VM *vm);
-void    CH8VM_set_keys(uint8_t *keyboard_state);
+
+int CH8VM_SDL_set_keys(CH8_VM *vm);
 
 #endif //CATASTROPHIC_CH8_VM_H
