@@ -1,8 +1,8 @@
 # catastrophic-chip8
 
-A catastrophic [Chip-8](https://en.wikipedia.org/wiki/CHIP-8) emulator written in C with the aim of learning about cpu emulation.
+A catastrophic [Chip-8](https://en.wikipedia.org/wiki/CHIP-8) emulator written in C to learn about CPU emulation.
 It is catastrophic in that my source code documentation is bad, there are several memory leaks with SDL2 that I am unable to fix, 
-and my general code style is bad. Also, it is extremely CPU heavy due to the way CPU cycles are timed. This might be fixed later.
+and my general code style is terrible. Also, it is extremely CPU heavy due to the way CPU cycles are timed. This might be fixed later.
 
 Currently it has these features:
 * Runs most Chip-8 games flawlessly (Not Chip-48: support will eventually be added).
