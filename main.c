@@ -115,7 +115,7 @@ CH8_emulation_loop(
     }
 
     SDL_Window *window = SDL_CreateWindow(
-            "Catastrophic CHIP8", 0, 0,
+            PROGNAME, 0, 0,
             CH8_VM_SCR_W * video_scale, CH8_VM_SCR_H * video_scale,
             SDL_WINDOW_SHOWN);
 
@@ -281,7 +281,7 @@ main(int argc, char **argv)
                     0, 1, "frequency of single chip8 sound in Hz (defaults to 440)"),
 
             ampl          = arg_intn(NULL, "ampl","<int>",
-                    0, 1, "anplitude of single chip8 sound (defaults to 20000)"),
+                    0, 1, "amplitude of single chip8 sound (defaults to 20000)"),
 
             verbose_mode  = arg_litn("v", "verbose",
                     0, 1, "verbose mode of emulator"),
