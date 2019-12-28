@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 # includes cmake/FindSDL2.cmake
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-set(CMAKE_C_FLAGS "-Wall --pedantic -g -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-all -Werror=format-security -Werror=implicit-function-declaration")
+set(CMAKE_C_FLAGS_DEBUG  "-Wall --pedantic -g -o3 -D_FORTIFY_SOURCE=2 -fstack-protector-all -Werror=format-security -Werror=implicit-function-declaration")
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
@@ -19,4 +19,4 @@ add_executable(catastrophic_chip8 main.c
         )
 
 target_link_libraries(catastrophic_chip8 ${SDL2_LIBRARIES} m)
-#target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG)
+target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG)

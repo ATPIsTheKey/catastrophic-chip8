@@ -90,7 +90,7 @@ void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
     for (int i = 0; i < length; i++, n_samples++)
     {
         double time = (double)n_samples / (double) AUDIO_SAMPLE_RATE;
-        buffer[i] = (Sint16)(AUDIO_AMPLITUDE * sin(2.0f * M_PI * (double) AUDIO_FREQ * time)); // render 441 HZ sine wave
+        buffer[i] = (Sint16)(AUDIO_AMPLITUDE * sin(2.0f * M_PI * (double) AUDIO_FREQ * time));
     }
 }
 
@@ -305,7 +305,7 @@ main(int argc, char **argv)
     beepfreq->ival[0]      = 440;
 
     int nerrors;
-    nerrors = arg_parse(argc,argv,argtable);
+    nerrors = arg_parse(argc, argv, argtable);
 
     // special case: '--help' takes precedence over error reporting
     if (help->count > 0)
