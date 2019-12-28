@@ -34,8 +34,8 @@
 /*** Some naïve macros to hopefully increase code readability *****************/
 
 
-#define X(opcode)   ( (opcode) & 0x0F00u >> 8u )
-#define Y(opcode)   ( (opcode) & 0x00F0u >> 4u )
+#define X(opcode)   ( ((opcode) & 0x0F00u) >> 8u )
+#define Y(opcode)   ( ((opcode) & 0x00F0u) >> 4u )
 #define N(opcode)   ( (opcode) & 0x000Fu )
 #define KK(opcode)  ( (opcode) & 0x00FFu )
 #define NNN(opcode) ( (opcode) & 0x0FFFu )
@@ -337,7 +337,7 @@ CH8_INSTR_Dxyn(CH8_VM *vm)
     uint8_t x_coord = CPU(vm)->V[x];
     uint8_t y_coord = CPU(vm)->V[y];
 
-    CPU(vm)->V[0xF] = 0x00000000;
+    CPU(vm)->V[0xF] = 0x00u;
     vm->internal_flags |= CH8_VM_SCREEN_UPDATE; // we are changing the framebuffer, so it has to be redrawn
 
     uint8_t sprite_byte;

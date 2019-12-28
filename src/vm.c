@@ -98,7 +98,7 @@ CH8_VM_init(uint32_t opt_flags)
 
     /*** CPU initialization */
 
-    memset(vm->cpu, 0x00, 16 * sizeof(uint8_t)); // clear V registers
+    memset(vm->cpu->V, 0x00, 16 * sizeof(uint8_t)); // clear V registers
     memset(vm->cpu->stack, 0x00, 16 * sizeof(uint8_t)); // clear the stack
 
     vm->cpu->I  = 0x0000;
@@ -161,13 +161,14 @@ CH8_VM_load_rom(CH8_VM *vm, const char *fpath)
     {
         if (!feof(rom_fp))
             vm->mem[CH8_VM_PROGRAM_START_ADDR + i] = b;
+
     }
     return CH8_VM_SUCCESS;
 }
 
 
 //> Returns whether drawflag is set and framebuffer has to be redrawn.
-inline int
+int
 CH8_VM_is_drawflag_set(CH8_VM *vm)
 {
     return vm->internal_flags & CH8_VM_SCREEN_UPDATE ? 1 : 0;
@@ -230,7 +231,7 @@ CH8_VM_SDL_set_keys(CH8_VM *vm)
             if (e.key.keysym.sym == SDLK_F2)
                 return CH8_VM_CPU_DUMP;
 
-            for (int i = 0; i < 16; ++i)
+            for (int i = 0; i < 16; ++i) // todo: sizeof(keypad)
                 if (e.key.keysym.sym == keymap[i])
                     vm->keypad[i] = 1u; // set key states
         }
