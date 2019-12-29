@@ -198,7 +198,7 @@ CH8_VM_emulate_cycle(CH8_VM *vm)
 {
     int rc;
 
-    // decode the instruction
+    // fetch the instruction
     vm->current_opcode = vm->mem[vm->cpu->pc] << 8 | vm->mem[vm->cpu->pc + 1];
     // execute the instruction
     rc = CH8_INSTR_exec(vm);
