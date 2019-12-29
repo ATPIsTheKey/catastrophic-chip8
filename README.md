@@ -11,7 +11,7 @@ Currently it has these features:
 * Some debug utilities in verbose mode such as vm reloading and CPU dumping.
 
 ## How to run
-Building this project requires CMake and SDL2, bot of which can be installed with a package manager of your choice. 
+Building this project requires CMake and SDL2, both of which can be installed with a package manager of your choice. 
 More detailed build instructions may be added later to this readme, though, the build process isn't really complex.
 
 ## Roms
