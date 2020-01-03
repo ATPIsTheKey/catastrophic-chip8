@@ -161,7 +161,6 @@ CH8_VM_load_rom(CH8_VM *vm, const char *fpath)
     {
         if (!feof(rom_fp))
             vm->mem[CH8_VM_PROGRAM_START_ADDR + i] = b;
-
     }
     return CH8_VM_SUCCESS;
 }
