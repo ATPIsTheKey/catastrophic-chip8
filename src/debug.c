@@ -26,6 +26,7 @@
 #include "debug.h"
 
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "../rf/mystdlib.h"
 
@@ -33,8 +34,15 @@
 int
 CH8_VM_DBG_log(const char *callee, const char *fmt, ...)
 {
-    int rc = fprintf(stderr, KRED"%s(): "KNRM"%s", callee, fmt);
-    return rc;
+    va_list arg;
+    int done;
+
+    va_start(arg, fmt);
+    fprintf(stderr, KRED"%s(): "KNRM, callee);
+    done = vfprintf(stdout, fmt, arg);
+    va_end(arg);
+
+    return done;
 }
 
 
