@@ -30,6 +30,7 @@
 
 #include "debug.h"
 
+#define HIGH_PIXEL 0xFFFFFFFF
 
 /*** Some naïve macros to hopefully increase code readability *****************/
 
@@ -40,9 +41,9 @@
 #define KK(opcode)  ( (opcode) & 0x00FFu )
 #define NNN(opcode) ( (opcode) & 0x0FFFu )
 
-#define CPU(vm_ptr) ((vm_ptr)->cpu) // This is crazy, I know, but using this macro its
-                                    // just more clear that we are manipulating the CPU
-                                    // of our vm. Accessing all those nested sub-objects
+#define CPU(vm_ptr) ((vm_ptr)->cpu) // Using this macro its just more clear
+                                    // that we are manipulating the CPU of our
+                                    // vm. Accessing all those nested sub-objects
                                     // with arrow operators is quite annoying to read.
 
 /*** Implementation of CHIP8 opcodes ******************************************/
@@ -350,9 +351,9 @@ CH8_INSTR_Dxyn(CH8_VM *vm)
             if ((sprite_byte & (0x80 >> x_line))) // get each individual bit
             {
                 uint16_t pixel = ((x_coord + x_line) + ((y_coord + y_line) << 6)) % 2048;
-                if (vm->framebuffer[pixel] == 0xFFFFFFFF)
+                if (vm->framebuffer[pixel] == HIGH_PIXEL)
                     CPU(vm)->V[0xF] = 0x01u;
-                vm->framebuffer[pixel] ^= 0xFFFFFFFF;
+                vm->framebuffer[pixel] ^= HIGH_PIXEL;
             }
         }
     }
