@@ -16,7 +16,7 @@ add_executable(catastrophic_chip8 main.c
         src/instructions.c src/instructions.h
         src/debug.c src/debug.h
         libs/argtable3.c libs/argtable3.h
-        )
+        src/types.h)
 
 target_link_libraries(catastrophic_chip8 ${SDL2_LIBRARIES} m)
 target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG)
