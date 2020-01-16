@@ -29,9 +29,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-
-typedef uint8_t  register8_t;
-typedef uint16_t register16_t;
+#include "types.h"
 
 
 typedef enum {
@@ -75,24 +73,24 @@ typedef enum {
 
 typedef struct CH8_CPU {
     // CHIP-8 has 16 8-bit wide registers, V0 to VF
-    register8_t  V[16];
+    reg8_t  V[16];
     // CHIP-8 has a 16-bit address register, I, which is 16 bits wide and is used
     // with several opcodes that involve memory operations. */
-    register16_t I;
+    reg16_t I;
 
     // CHIP-8 has two timers. They both are decremented at a rate 60 hertz, until
     // they reach 0.
-    register8_t  delay_timer;
-    register8_t  sound_timer;
+    reg8_t  delay_timer;
+    reg8_t  sound_timer;
 
     // Program counter register is 16-bit wide and contains the address of the
     // instruction being executed at the current cycle. As each instruction
     // gets fetched, the program counter is incremented by 1. */
-    register16_t pc;
+    reg16_t pc;
 
     // The stack is 16 byte wide and is used to store return addresses when
     //subroutines are called. */
-    register8_t  sp;
+    reg8_t  sp;
     uint16_t stack[16];
 } CH8_CPU;
 
